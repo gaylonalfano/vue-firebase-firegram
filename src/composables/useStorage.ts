@@ -64,7 +64,7 @@
 
 // export default useStorage;
 
-// // COMPLETED ATTEMPT to convert React approach to Vue
+// // COMPLETED BROKEN ATTEMPT to convert React approach to Vue
 // import { ref, watchEffect } from "vue";
 // import { storage } from "@/firebase/config";
 
@@ -134,7 +134,7 @@ function useStorage() {
     // Upload file to storageRef using await put()
     // Use a try/catch in case of an error
     try {
-      // // Q: How to grab uploadProgress? Use watch(), watchEffect(), computed()?
+      // Q: How to grab uploadProgress? Use watch(), watchEffect(), computed()?
       const uploadTask = storageRef.put(file);
       uploadTask.on(
         "state_change",
@@ -176,12 +176,6 @@ function useStorage() {
           fileUrl.value = await uploadTask.snapshot.ref.getDownloadURL();
         }
       );
-      // WORKS but ALWAYS 100%. This simple code just uploads the file always logs 100% done.
-      // const response = await storageRef.put(file);
-      // uploadProgress.value =
-      //   (response.bytesTransferred / response.totalBytes) * 100;
-      // console.log(`Upload is ${uploadProgress.value} % done`);
-      // fileUrl.value = await response.ref.getDownloadURL();
     } catch (err) {
       console.log(err.message);
       // Update error.value

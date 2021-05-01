@@ -1,10 +1,13 @@
 <template>
   <form>
-    <input type="file" @change="handleFileChange" />
+    <label>
+      <input type="file" @change="handleFileChange" />
+      <span>+</span>
+    </label>
     <div class="output">
       <div v-if="uploadedFile">
         {{ uploadedFile.name }} :
-        <ProgressBar :file="uploadedFile" />
+        <ProgressBar :file="uploadedFile" @uploadComplete="resetFile" />
       </div>
       <div v-if="fileError" class="error">{{ fileError }}</div>
     </div>
@@ -55,7 +58,17 @@ export default defineComponent({
       }
     }
 
-    return { handleFileChange, uploadedFile, fileError };
+    // Function to reset the global uploadedFile value back to null
+    // after successfully uploading (within child ProgressBar component)
+    function resetFile() {
+      uploadedFile.value = null;
+      console.log(
+        "UploadForm:resetFile:uploadedFile.value: ",
+        uploadedFile.value
+      );
+    }
+
+    return { handleFileChange, uploadedFile, fileError, resetFile };
   },
 });
 </script>
