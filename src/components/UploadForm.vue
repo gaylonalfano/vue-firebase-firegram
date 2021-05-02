@@ -6,7 +6,7 @@
     </label>
     <div class="output">
       <div v-if="uploadedFile">
-        {{ uploadedFile.name }} :
+        {{ uploadedFile.name }}
         <ProgressBar :file="uploadedFile" @uploadComplete="resetFile" />
       </div>
       <div v-if="fileError" class="error">{{ fileError }}</div>

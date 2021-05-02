@@ -115,7 +115,7 @@
 // REFERENCE:
 // composables/useStorage.ts
 import { ref } from "vue";
-import { storage } from "@/firebase/config";
+import { db, storage, timestamp } from "@/firebase/config";
 
 function useStorage() {
   const error = ref<string | null>(null);
@@ -128,8 +128,10 @@ function useStorage() {
   async function uploadImage(file: File) {
     // Specify the file path we want in Storage
     filePath.value = `images/${file.name}`;
-    // Create a Ref to this Storage using our filePath
+    // Create a FB Ref to this Storage using our filePath
     const storageRef = storage.ref(filePath.value);
+    // Create a FB Ref to collection so we can add new doc
+    const collectionRef = db.collection("images");
 
     // Upload file to storageRef using await put()
     // Use a try/catch in case of an error
@@ -174,6 +176,8 @@ function useStorage() {
         async () => {
           // Update fileUrl from the response object
           fileUrl.value = await uploadTask.snapshot.ref.getDownloadURL();
+          // Create the document inside images collection
+          collectionRef.add({ url: fileUrl.value, createdAt: timestamp() });
         }
       );
     } catch (err) {
