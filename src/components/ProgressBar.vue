@@ -11,6 +11,7 @@ import useStorage from "@/composables/useStorage";
 export default defineComponent({
   name: "ProgressBar",
   props: ["file"],
+  emits: ["uploadComplete"],
   setup(props, context) {
     const { error, fileUrl, uploadImage, uploadProgress } = useStorage();
     // Make a Ref to show bar and then use watchEffect()
