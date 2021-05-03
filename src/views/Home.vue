@@ -2,8 +2,12 @@
   <div class="home">
     <Title />
     <UploadForm />
-    <ImageGrid @imageClicked="passImageSourceToModal" />
-    <ImageModal :imageSource="imageSourceForModal" />
+    <ImageGrid @imageClicked="setImageSourceForModal" />
+    <ImageModal
+      :imageSource="imageSourceForModal"
+      v-if="imageSourceForModal"
+      @modalBackdropClicked="setImageSourceToNull"
+    />
   </div>
 </template>
 
@@ -26,12 +30,23 @@ export default defineComponent({
     const imageSourceForModal = ref<string | null>(null);
     // Capture image source passed from @imageClicked event payload
     // Q: Does the param name have to match the emitted payload variable name?
-    function passImageSourceToModal(imageUrl: string) {
+    function setImageSourceForModal(imageUrl: string) {
       // Update global imageSource state with new value and pass to Modal
       imageSourceForModal.value = imageUrl;
     }
 
-    return { imageSourceForModal, passImageSourceToModal };
+    // Set imageSourceForModal to be null to close Modal
+    // NOTE We're using the global imageSource to control Modal open/close
+    // See the ImageModal component for details
+    function setImageSourceToNull() {
+      imageSourceForModal.value = null;
+    }
+
+    return {
+      imageSourceForModal,
+      setImageSourceForModal,
+      setImageSourceToNull,
+    };
   },
 });
 </script>
