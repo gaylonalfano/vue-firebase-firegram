@@ -1,6 +1,8 @@
 <template>
   <!-- <div class="img-grid"> -->
   <div v-if="!error && documents" class="image-grid">
+    <!-- FIXME Can't seem to get transition-group to work... -->
+    <!-- <transition-group name="list" tag="div" class="image-grid"> -->
     <div
       v-for="image in documents"
       :key="image.id"
@@ -13,6 +15,7 @@
       <!-- <img src="img.url" alt="uploaded image" /> -->
       <img :src="image.url" alt="uploaded image" />
     </div>
+    <!-- </transition-group> -->
   </div>
   <!-- </div> -->
 </template>
