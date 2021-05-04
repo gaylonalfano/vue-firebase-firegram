@@ -1,21 +1,21 @@
 <template>
   <!-- <div class="img-grid"> -->
-  <div v-if="!error && documents" class="image-grid">
+  <div v-if="!error && documents">
     <!-- FIXME Can't seem to get transition-group to work... -->
-    <!-- <transition-group name="list" tag="div" class="image-grid"> -->
-    <div
-      v-for="image in documents"
-      :key="image.id"
-      @click="passImageSourceToHome"
-      class="image-wrap"
-    >
-      <!-- <h3>createdAt: {{ img.createdAt }}</h3> -->
-      <!-- <p>url: {{ img.url }}</p> -->
-      <!-- <img src="{{ img.url }}" alt="uploaded image" /> -->
-      <!-- <img src="img.url" alt="uploaded image" /> -->
-      <img :src="image.url" alt="uploaded image" />
-    </div>
-    <!-- </transition-group> -->
+    <transition-group name="list" tag="div" class="image-grid">
+      <div
+        v-for="image in documents"
+        :key="image.id"
+        @click="passImageSourceToHome"
+        class="image-wrap"
+      >
+        <!-- <h3>createdAt: {{ img.createdAt }}</h3> -->
+        <!-- <p>url: {{ img.url }}</p> -->
+        <!-- <img src="{{ img.url }}" alt="uploaded image" /> -->
+        <!-- <img src="img.url" alt="uploaded image" /> -->
+        <img :src="image.url" alt="uploaded image" />
+      </div>
+    </transition-group>
   </div>
   <!-- </div> -->
 </template>
